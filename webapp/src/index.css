@@ -85,8 +85,17 @@ code {
   display:inline-block;
   font-weight:bold;
   margin-bottom:0;
+  margin-top:10px;
 }
 
+.ava-download{
+  margin-right:5px;
+  display:inline-block;
+}
+
+.ava-info{
+  margin-top:10px;
+}
 label{
   width:15%;
 }

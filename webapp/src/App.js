@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 import Card from 'react-bootstrap/Card';
 
+var tools = require('./tools.json');
+
+
 function App() {
+
+  const [selectedTool, setSelectedTool] = useState({});
+  const [hasSelectedTool, setHasSelectedTool] = useState(false);
+
   return (
     <div className="app">
 
@@ -23,13 +30,41 @@ function App() {
             <Card.Body>
               <Card.Text>
 
-                <p className="ava-bold"> Model: </p>
+
+                <div class="form-group row">
+                  <label><p className="ava-bold"> Model: </p> </label>
+                  <div className="ava-select-cont">
+                    <select class="form-control form-control-sm"  onChange={(e) => {setSelectedTool(tools[e.target.value]); setHasSelectedTool(true)}}>
+                      <option value={-1}>Please select a model...</option>
+                      {
+                        tools.map((tool,index) => <option value={index}>{tool.name}</option>)
+                      }
+                    </select>
+                  </div>
+                </div>
+
+                <p className="ava-description">
+
+                {(hasSelectedTool) ? <div><p className="ava-descript-header">Description:</p> {selectedTool.description} </div> : <div></div>}
+                {(hasSelectedTool) ? <div><p className="ava-descript-header">Source:</p> <a href={selectedTool.link}>{selectedTool.link}</a> </div> : <div></div>}
+                </p>
+
+                <div class="form-group row">
+                  <label><p className="ava-bold"> Dataset: </p> </label>
+                  <div className="ava-select-cont">
+                    <select class="form-control form-control-sm">
+                      <option>Xu</option>
+                      <option>Doench</option>
+                    </select>
+                  </div>
+                </div>
+
+                <p className="ava-description">
                 Some quick example text to build on the card title and make up the bulk of
                 the card's content.
-          
-                <p className="ava-bold"> Data: </p>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
+                </p>
+
+
               </Card.Text>
 
               <Card.Link style={{ bottom:'0px' }} href="#">

@@ -61,10 +61,49 @@ code {
   margin-top: 3%;
   margin-bottom: 0;
   font-weight: bold;
+  display:inline;
+}
+
+
+.ava-header{
+  display:inline!important;
+  width:20%!important;
+}
+
+.ava-select{
+  display:inline!important;
+  width:80%!important;
+  margin-right:0;
+}
+
+.ava-select-cont{
+  display:inline-block;
+  width:80%;
+}
+
+.ava-descript-header{
+  display:inline-block;
+  font-weight:bold;
+  margin-bottom:0;
+}
+
+label{
+  width:15%;
+}
+.ava-description{
+  margin-top: 3%;
 }
 
 #root{
   height:100%;
+}
+
+.col-sm-10{
+  flex: 0 0 0;
+}
+
+.form-group.row{
+  margin-left: auto;
 }
 
 .app{

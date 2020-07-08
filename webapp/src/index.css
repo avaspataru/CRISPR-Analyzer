@@ -1,3 +1,8 @@
+html, body {
+    height:100%;
+}
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +15,58 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.ava-container-nav{
+  background-color: #f8f9fa;
+  padding:1.2%;
+  height:10%;
+  position:fixed;
+  width:100%;
+}
+
+.ava-left-container{
+  width:50%;
+  height:90%;
+  top:10%;
+  padding:2%;
+  position:fixed;
+}
+
+.ava-right-container{
+  width:50%;
+  height:90%;
+  top:10%;
+  padding:2%;
+  position:fixed;
+  left:50%;
+}
+
+.ava-text-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height:100%;
+}
+
+.ava-card-container{
+  height:100%;
+}
+
+.ava-block{
+  display: block;
+}
+
+.ava-bold{
+  margin-top: 3%;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+#root{
+  height:100%;
+}
+
+.app{
+  min-height:100%;
 }

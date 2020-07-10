@@ -50,7 +50,27 @@ function App() {
   }
 
   const getShapPlot = (tool,data) => {
-    console.log("coming up");
+    if(!hasSelectedTool){
+      setHasError(true);
+      setErrorMessage("You have not selected a model.");
+    } else if (!hasSelectedData){
+      setHasError(true);
+      setErrorMessage("You have not selected a dataset.");
+    }
+    else {
+      setHasError(false);
+      setPlotLoading(true);
+      axios.get(`http://127.0.0.1:5000/shap?tool=${tool.code}&data=${data.code}`)
+            .then(res => {
+              setPlot(res.data);
+              setPlotLoaded(true);
+              setPlotLoading(false);
+            })
+            .catch( err => {
+              setHasError(true);
+              setErrorMessage("Something went wrong.");
+            })
+    }
   }
 
   const changeTool = (pos) => {

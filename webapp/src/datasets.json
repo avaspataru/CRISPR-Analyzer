@@ -1,10 +1,12 @@
 [
     {
       "name": "Xu 2015",
-      "link": "./resources/Xu-2015_Is-Efficient.csv"
+      "link": "./resources/Xu-2015_Is-Efficient.csv",
+      "code": "xu"
     },
     {
       "name":"Doench 2014",
-      "link": "./resources/Doench-2014.csv"
+      "link": "./resources/Doench-2014.csv",
+      "code": "doench"
     }
 ]

@@ -1,7 +1,6 @@
 from tooldata import ToolData
 from collections import defaultdict
 from sklearn.svm import SVC
-from Bio import SeqIO
 
 import pandas as pd
 import numpy as np

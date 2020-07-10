@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert';
 
 import axios from 'axios';
 
@@ -21,14 +22,57 @@ function App() {
   const [plotLoaded, setPlotLoaded] = useState(false);
   const [plot, setPlot] = useState({});
 
-  const getPlot = () => {
-    setPlotLoading(true);
-    axios.get(`http://127.0.0.1:5000/pos?tool=tuscan-classification&data=xu`)
-          .then(res => {
-            setPlot(res.data);
-            setPlotLoaded(true);
-            setPlotLoading(false);
-          })
+  const [errorMessage, setErrorMessage] = useState('');
+  const [hasError, setHasError] = useState(false);
+
+  const getPosPlot = (tool,data) => {
+    if(!hasSelectedTool){
+      setHasError(true);
+      setErrorMessage("You have not selected a model.");
+    } else if (!hasSelectedData){
+      setHasError(true);
+      setErrorMessage("You have not selected a dataset.");
+    }
+    else {
+      setHasError(false);
+      setPlotLoading(true);
+      axios.get(`http://127.0.0.1:5000/pos?tool=${tool.code}&data=${data.code}`)
+            .then(res => {
+              setPlot(res.data);
+              setPlotLoaded(true);
+              setPlotLoading(false);
+            })
+            .catch( err => {
+              setHasError(true);
+              setErrorMessage("Something went wrong.");
+            })
+    }
+  }
+
+  const getShapPlot = (tool,data) => {
+    console.log("coming up");
+  }
+
+  const changeTool = (pos) => {
+    if(pos==-1){
+      setHasSelectedTool(false);
+      setSelectedTool({});
+    } else {
+      setHasError(false);
+      setSelectedTool(tools[pos]);
+      setHasSelectedTool(true);
+    }
+  }
+
+  const changeData = (pos) => {
+    if(pos==-1){
+      setHasSelectedData(false);
+      setSelectedData({});
+    } else {
+      setHasError(false);
+      setSelectedData(datasets[pos]);
+      setHasSelectedData(true);
+    }
   }
 
   return (
@@ -54,7 +98,7 @@ function App() {
                 <div class="form-group row">
                   <label><p className="ava-bold"> Model: </p> </label>
                   <div className="ava-select-cont">
-                    <select class="form-control form-control-sm"  onChange={(e) => {setSelectedTool(tools[e.target.value]); setHasSelectedTool(true)}}>
+                    <select class="form-control form-control-sm"  onChange={(e) => changeTool(e.target.value)}>
                       <option value={-1}>Please select a model...</option>
                       {
                         tools.map((tool,index) => <option value={index}>{tool.name}</option>)
@@ -75,7 +119,7 @@ function App() {
                 <div class="form-group row">
                   <label><p className="ava-bold"> Dataset: </p> </label>
                   <div className="ava-select-cont">
-                    <select class="form-control form-control-sm"  onChange={(e) => {setSelectedData(datasets[e.target.value]); setHasSelectedData(true)}}>
+                    <select class="form-control form-control-sm"  onChange={(e) => changeData(e.target.value)}>
                     <option value={-1}>Please select a dataset...</option>
                     {
                       datasets.map((dataset,index) => <option value={index}>{dataset.name}</option>)
@@ -86,7 +130,6 @@ function App() {
 
                 <p className="ava-description">
                 {(hasSelectedData)
-
                    ?
                    <a href={selectedData.link} download>
                    <div>
@@ -107,11 +150,23 @@ function App() {
                  <div><p> The data will be used to determine the SHAP values for the features in the selected model. Each data point will have it's own SHAP values for each feature. </p></div>
                 </p>
 
+                {(hasError)
+                  ? <div>
+                      <Alert variant='danger'>
+                        <p> {errorMessage} </p>
+                      </Alert>
+                    </div>
+                  : <div></div>
+                }
 
               </Card.Text>
 
               <Card.Link style={{ bottom:'0px' }} href="#">
-                <Button variant="primary" onClick={() => getPlot()} >Run</Button>{' '}
+                <Button variant="primary" onClick={() => getShapPlot(selectedTool, selectedData)} >Run Shap</Button>{' '}
+              </Card.Link>
+
+              <Card.Link style={{ bottom:'0px' }} href="#">
+                <Button variant="primary" onClick={() => getPosPlot(selectedTool, selectedData)} >Run Pos</Button>{' '}
               </Card.Link>
 
             </Card.Body>
@@ -122,7 +177,7 @@ function App() {
       <div className="ava-right-container">
       <Card className="text-center" style={{ height:'100%' }}>
       {(plotLoading)
-        ? <div className="ava-spin">
+        ? <div className="ava-center">
             <Spinner animation="border" variant="primary" >
               <span className="sr-only">Loading...</span>
             </Spinner>
@@ -151,7 +206,7 @@ function App() {
       }
 
       {(plotLoaded && !plotLoading)
-        ? <img src={"data:image/png;base64,"+plot}  alt="my plots" />
+        ? <div className="ava-center"> <img src={"data:image/png;base64,"+plot}  alt="my plots" /> </div>
         : <div></div>
       }
       </Card>

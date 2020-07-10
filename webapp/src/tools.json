@@ -2,11 +2,13 @@
     {
       "name": "sgRNAScorer 2.0",
       "description": "This is a linear SVC model, which was trained on two datasets SpCas9 and St1Cas9. The feature space of the tool is comprised of the 80 binary positional features.",
-      "link": "https://sgrnascorer.cancer.gov/"
+      "link": "https://sgrnascorer.cancer.gov/",
+      "code": "sgrnascorer2"
     },
     {
       "name":"SSC - Spacer Scan for CRISPR",
       "description": "This is a linear classifier which used Elastic-Net for feature selection and was trained on the Xu dataset. The feature space of the tool is comprised of the 80 binary positional features.",
-      "link": "http://cistrome.org/SSC/"
+      "link": "http://cistrome.org/SSC/",
+      "code": "ssc"
     }
 ]

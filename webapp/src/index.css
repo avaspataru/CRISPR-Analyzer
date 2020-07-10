@@ -64,6 +64,12 @@ code {
   display:inline;
 }
 
+.ava-label-in{
+  margin-top: 3%;
+  margin-bottom: 0;
+  display:inline;
+}
+
 
 .ava-header{
   display:inline!important;
@@ -109,6 +115,10 @@ label{
 
 .col-sm-10{
   flex: 0 0 0;
+}
+
+.ava-in{
+  display:inline-block;
 }
 
 .ava-center{

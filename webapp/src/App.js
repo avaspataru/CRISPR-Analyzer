@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
@@ -11,6 +11,8 @@ var tools = require('./tools.json');
 var datasets = require('./datasets.json');
 
 function App() {
+
+  const [analysisMode,setAnalysisMode] = useState(0); //0 = single tool, 1 = compare
 
   const [selectedTool, setSelectedTool] = useState({});
   const [hasSelectedTool, setHasSelectedTool] = useState(false);
@@ -24,6 +26,8 @@ function App() {
 
   const [errorMessage, setErrorMessage] = useState('');
   const [hasError, setHasError] = useState(false);
+
+  const [selectedComparisonTools, setSelectedComparisonTools] = useState([]);
 
   const getPosPlot = (tool,data) => {
     if(!hasSelectedTool){
@@ -47,6 +51,10 @@ function App() {
               setErrorMessage("Something went wrong.");
             })
     }
+  }
+
+  const addTool = (pos) => {
+      setSelectedComparisonTools(selectedComparisonTools.concat(pos));
   }
 
   const getShapPlot = (tool,data) => {
@@ -108,13 +116,23 @@ function App() {
 
             <Card.Header>
               <Card.Title>Options</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">Select the model and data for analysis.</Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">Select the models and data that you wish to analyze.</Card.Subtitle>
+              <br></br>
+              <Nav fill variant="tabs" defaultActiveKey="/">
+                <Nav.Item>
+                  <Nav.Link href="/" onClick={() => setAnalysisMode(0)}>Single model</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="link-1" onClick={() =>setAnalysisMode(1)}>Compare models</Nav.Link>
+                </Nav.Item>
+              </Nav>
             </Card.Header>
 
             <Card.Body>
-              <Card.Text>
 
-
+                {(!analysisMode)
+                ?<div>
+                <Card.Text>
                 <div class="form-group row">
                   <label><p className="ava-bold"> Model: </p> </label>
                   <div className="ava-select-cont">
@@ -178,16 +196,40 @@ function App() {
                     </div>
                   : <div></div>
                 }
+                </Card.Text>
+                <Card.Link style={{ bottom:'0px' }} href="#">
+                  <Button variant="primary" onClick={() => getShapPlot(selectedTool, selectedData)} >Run Shap</Button>{' '}
+                </Card.Link>
 
-              </Card.Text>
+                <Card.Link style={{ bottom:'0px' }} href="#">
+                  <Button variant="primary" onClick={() => getPosPlot(selectedTool, selectedData)} >Run Pos</Button>{' '}
+                </Card.Link>
 
-              <Card.Link style={{ bottom:'0px' }} href="#">
-                <Button variant="primary" onClick={() => getShapPlot(selectedTool, selectedData)} >Run Shap</Button>{' '}
-              </Card.Link>
+                </div>
+                :
+                <div>
+                  <p>This tool allows you to inspect the preferences of different models for the positional features across the guide. You can select as many models as you want, but with more than three it generally looks messy. </p>
 
-              <Card.Link style={{ bottom:'0px' }} href="#">
-                <Button variant="primary" onClick={() => getPosPlot(selectedTool, selectedData)} >Run Pos</Button>{' '}
-              </Card.Link>
+                  <hr />
+
+                  {selectedComparisonTools.map( (tool,index) =><div> <p className="ava-bold">Model #{index}: </p><p className="ava-in">{tools[tool].name}</p></div>)}
+
+                    <p className="ava-label-in">Add </p><div className="ava-select-cont">
+                      <select class="form-control form-control-sm" value={-1} onChange={(e) => addTool(e.target.value)}>
+                        <option value={-1}>Select a model...</option>
+                        {
+                          tools.map((tool,index) => <option value={index}>{tool.name}</option>)
+                        }
+                      </select>
+                    </div>
+
+                    <hr />
+                    <p className="ava-bold">Datasets:</p>
+
+
+                </div>
+                }
+
 
             </Card.Body>
           </Card>

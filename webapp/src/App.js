@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
+import Form from 'react-bootstrap/Form';
 
 import axios from 'axios';
 
@@ -55,6 +56,17 @@ function App() {
 
   const addTool = (pos) => {
       setSelectedComparisonTools(selectedComparisonTools.concat(pos));
+  }
+
+  var checkedDatasets = []
+  const checkedData = (pos) => {
+    const index = checkedDatasets.indexOf(pos);
+    if (index > -1) {
+        checkedDatasets.splice(index, 1);
+    } else {
+      checkedDatasets.push(pos);
+    }
+    console.log(checkedDatasets);
   }
 
   const getShapPlot = (tool,data) => {
@@ -225,6 +237,23 @@ function App() {
 
                     <hr />
                     <p className="ava-bold">Datasets:</p>
+                    <br />
+                    <Form>
+                      {datasets.map( (data,index) =>
+                        <div key={`default-checkbox`} className="mb-3">
+                          <Form.Check
+                            type={'checkbox'}
+                            id={`default-checkbox`}
+                            label={data.name}
+                            onClick={(event) => checkedData(index)}
+                          />
+                        </div>
+                      )}
+                    </Form>
+
+                    <Card.Link style={{ bottom:'0px' }} href="#">
+                      <Button variant="primary" onClick={() => console.log("TODO")} >Compare</Button>{' '}
+                    </Card.Link>
 
 
                 </div>

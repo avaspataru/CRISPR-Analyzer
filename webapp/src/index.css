@@ -105,6 +105,14 @@ code {
 label{
   width:15%;
 }
+
+form{
+  margin-top:10px;
+}
+
+.form-check label{
+  width:100%;
+}
 .ava-description{
   margin-top: 3%;
 }

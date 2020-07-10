@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 import Card from 'react-bootstrap/Card';
+import Spinner from 'react-bootstrap/Spinner';
+
+import axios from 'axios';
 
 var tools = require('./tools.json');
 var datasets = require('./datasets.json');
@@ -13,6 +16,20 @@ function App() {
 
   const [selectedData, setSelectedData] = useState({});
   const [hasSelectedData, setHasSelectedData] = useState(false);
+
+  const [plotLoading, setPlotLoading] = useState(false);
+  const [plotLoaded, setPlotLoaded] = useState(false);
+  const [plot, setPlot] = useState({});
+
+  const getPlot = () => {
+    setPlotLoading(true);
+    axios.get(`http://127.0.0.1:5000/pos?tool=tuscan-classification&data=xu`)
+          .then(res => {
+            setPlot(res.data);
+            setPlotLoaded(true);
+            setPlotLoading(false);
+          })
+  }
 
   return (
     <div className="app">
@@ -81,7 +98,7 @@ function App() {
                            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0v-8A.5.5 0 0 1 8 1z"/>
                           </svg>
                         </div>
-                        Download a copy of the dataset.
+                        Download the dataset.
                         </p>
                     </div>
                     </a>
@@ -94,7 +111,7 @@ function App() {
               </Card.Text>
 
               <Card.Link style={{ bottom:'0px' }} href="#">
-                <Button variant="primary">Run</Button>{' '}
+                <Button variant="primary" onClick={() => getPlot()} >Run</Button>{' '}
               </Card.Link>
 
             </Card.Body>
@@ -104,21 +121,39 @@ function App() {
 
       <div className="ava-right-container">
       <Card className="text-center" style={{ height:'100%' }}>
-        <Card.Body>
-
-          <div className="ava-text-container">
-            <div className="ava-block">
-              <svg width="2em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
-              </svg>
-
-              <Card.Text>
-                The plot will appear here, once you have selected options.
-              </Card.Text>
-            </div>
+      {(plotLoading)
+        ? <div className="ava-spin">
+            <Spinner animation="border" variant="primary" >
+              <span className="sr-only">Loading...</span>
+            </Spinner>
           </div>
+        : <div></div>
+      }
 
-        </Card.Body>
+      {(!plotLoading && !plotLoaded)
+        ?
+          <Card.Body>
+            <div className="ava-text-container">
+              <div className="ava-block">
+                <svg width="2em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
+                </svg>
+
+                <Card.Text>
+                  The plot will appear here, once you have selected options.
+                </Card.Text>
+              </div>
+            </div>
+          </Card.Body>
+        :
+        <div>
+        </div>
+      }
+
+      {(plotLoaded && !plotLoading)
+        ? <img src={"data:image/png;base64,"+plot}  alt="my plots" />
+        : <div></div>
+      }
       </Card>
       </div>
     </div>

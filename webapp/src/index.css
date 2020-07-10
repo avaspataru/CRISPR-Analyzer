@@ -111,6 +111,11 @@ label{
   flex: 0 0 0;
 }
 
+.ava-spin{
+  margin-left:auto;
+  margin-right:auto;
+}
+
 .form-group.row{
   margin-left: auto;
 }

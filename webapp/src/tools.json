@@ -10,5 +10,41 @@
       "description": "This is a linear classifier which used Elastic-Net for feature selection and was trained on the Xu dataset. The feature space of the tool is comprised of the 80 binary positional features.",
       "link": "http://cistrome.org/SSC/",
       "code": "ssc"
+    },
+    {
+      "name":"CHOP CHOP (XU 2015 scoring)",
+      "description":"The model is based on a penalized regression model, trained on the Xu dataset. The feature set includes the gc content, some position specific nucleotides and di-nucleotides in the sequence, PAM and tail sections.",
+      "link":"https://chopchop.cbu.uib.no/",
+      "code": "chop-chop-xu"
+    },
+    {
+      "name":"CHOP CHOP (DOENCH 2014 scoring)",
+      "description": "The model is based on an SVM with logistic regression which was trained on the Doench dataset.  The feature set includes the gc content, some position specific nucleotides and di-nucleotides in the sequence, PAM and tail sections.",
+      "link":"https://chopchop.cbu.uib.no/",
+      "code": "chop-chop-doench"
+    },
+    {
+      "name":"CHOP CHOP (MORENO MATEOS scoring)",
+      "description": "The model is a linear regression model trained on the Doench and Kuscu datasets. The feature set includes the gc content, some position specific nucleotides and di-nucleotides in the sequence, PAM and tail sections.",
+      "link":"https://chopchop.cbu.uib.no/",
+      "code": "chop-chop-moreno"
+    },
+    {
+      "name": "TUSCAN (Classification)",
+      "description": "The model is a Random Forest Classifier, trained on a dataset of 28,606 target sites from combined sources. The feature set includes the GC content, counts of nucleotides and dinucleotides as well as position specific nucleotides and dinucleotides.",
+      "link": "https://github.com/BauerLab/TUSCAN",
+      "code": "tuscan-classification"
+    },
+    {
+      "name": "TUSCAN (Regression)",
+      "description": "The model is a Random Forest Regressor, trained on a dataset of 28,606 target sites from combined sources. The feature set includes the GC content, counts of nucleotides and dinucleotides as well as position specific nucleotides and dinucleotides.",
+      "link": "https://github.com/BauerLab/TUSCAN",
+      "code": "tuscan-regression"
+    },
+    {
+      "name": "WU-CRISPR",
+      "description": "The model is stacking model with two layers. The first layer uses 5 SVMs and 5 XGBoost models to predict the probabilities of a guide being efficient. The second layer uses the average result of the 5 SVM and the average result of the 5 XGBoost to predict the final probability, using a logistic model.",
+      "link": "http://crispr.wustl.edu/",
+      "code": "wu-crispr"
     }
 ]

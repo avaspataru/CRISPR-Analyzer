@@ -56,10 +56,12 @@ function App() {
   }
 
   const addTool = (pos) => {
+      setHasError(false);
       setSelectedComparisonTools(selectedComparisonTools.concat(pos));
   }
 
   const checkedData = (pos) => {
+    setHasError(false);
     let cd = [...checkedDatasets];
     const index = cd.indexOf(pos);
 
@@ -72,22 +74,38 @@ function App() {
   }
 
   const startCompare = () => {
-    setPlotLoading(true);
-    //checkedDatasets and selectedComparisonTools have the positions in respective arrays
+    setHasError(false);
+    if(selectedComparisonTools.length == 0){
+      setHasError(true);
+      setErrorMessage("Please select at least one tool.")
+    } else if (checkedDatasets.length == 0){
+      setHasError(true);
+      setErrorMessage("Please select at least one dataset.")
+    }else {
 
-    var methods = [];
-    for(var t in selectedComparisonTools)
-      for(var d in checkedDatasets ){
-        var methodName = tools[selectedComparisonTools[t]].code + "-" + datasets[checkedDatasets[d]].code;
-        methods.push(methodName);
+      setPlotLoading(true);
+      //checkedDatasets and selectedComparisonTools have the positions in respective arrays
+
+      var methods = [];
+      for(var t in selectedComparisonTools)
+        for(var d in checkedDatasets ){
+          var methodName = tools[selectedComparisonTools[t]].code + "-" + datasets[checkedDatasets[d]].code;
+          methods.push(methodName);
+        }
+
+      axios.get(`http://127.0.0.1:5000/compare?methods=${methods}`)
+              .then(res => {
+                setPlot(res.data);
+                setPlotLoaded(true);
+                setPlotLoading(false);
+              })
+              .catch(err => {
+                setHasError(true);
+                setErrorMessage("Something went wrong.");
+                setPlotLoading(false);
+                setPlotLoaded(false);
+              })
       }
-
-    axios.get(`http://127.0.0.1:5000/compare?methods=${methods}`)
-            .then(res => {
-              setPlot(res.data);
-              setPlotLoaded(true);
-              setPlotLoading(false);
-            })
   }
 
   const getShapPlot = (tool,data) => {
@@ -137,6 +155,7 @@ function App() {
   }
 
   const changeAnalysisMode = (mode) => {
+    setHasError(false);
     if (mode != analysisMode){
       setPlotLoaded(false);
       setPlotLoading(false);
@@ -281,6 +300,15 @@ function App() {
                         </div>
                       )}
                     </Form>
+
+                    {(hasError)
+                      ? <div>
+                          <Alert variant='danger'>
+                            <p> {errorMessage} </p>
+                          </Alert>
+                        </div>
+                      : <div></div>
+                    }
 
                     <div className="ava-buttons">
                       <Card.Link style={{ bottom:'0px' }} href="#">

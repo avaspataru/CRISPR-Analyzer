@@ -2,6 +2,7 @@ import flask
 from flask import request
 from plotPositionsFromPickle import plotPosForFile
 from plotShapFromPickle import plotShapForFile
+from comparePositionTools import compareMethods
 
 import io
 from flask import Response
@@ -53,6 +54,22 @@ def pos():
     fileName = "SHAP-" + toolName + "-" + data
 
     plt = plotPosForFile(fileName)
+
+    pic_IObytes = io.BytesIO()
+    plt.savefig(pic_IObytes,  format='png')
+    pic_IObytes.seek(0)
+    pic_hash = base64.b64encode(pic_IObytes.read())
+    plt.close()
+    return pic_hash
+
+@app.route('/compare', methods=['GET'])
+@cross_origin(origins="*")
+def compare():
+    methods = request.args.get('methods')
+
+    methodsList = methods.split(",");
+
+    plt = compareMethods(methodsList)
 
     pic_IObytes = io.BytesIO()
     plt.savefig(pic_IObytes,  format='png')

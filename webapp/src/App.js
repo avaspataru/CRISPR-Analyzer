@@ -29,6 +29,7 @@ function App() {
   const [hasError, setHasError] = useState(false);
 
   const [selectedComparisonTools, setSelectedComparisonTools] = useState([]);
+  const [checkedDatasets, setCheckedDatasets] = useState([]);
 
   const getPosPlot = (tool,data) => {
     if(!hasSelectedTool){
@@ -58,15 +59,36 @@ function App() {
       setSelectedComparisonTools(selectedComparisonTools.concat(pos));
   }
 
-  var checkedDatasets = []
   const checkedData = (pos) => {
-    const index = checkedDatasets.indexOf(pos);
+    let cd = [...checkedDatasets];
+    console.log(cd);
+    const index = cd.indexOf(pos);
+    console.log(index);
     if (index > -1) {
-        checkedDatasets.splice(index, 1);
+        cd.splice(index, 1);
     } else {
-      checkedDatasets.push(pos);
+      cd.push(pos);
     }
-    console.log(checkedDatasets);
+    setCheckedDatasets(cd);
+  }
+
+  const startCompare = () => {
+    setPlotLoading(true);
+    //checkedDatasets and selectedComparisonTools have the positions in respective arrays
+
+    var methods = [];
+    for(var t in selectedComparisonTools)
+      for(var d in checkedDatasets ){
+        var methodName = tools[t].code + "-" + datasets[d].code;
+        methods.push(methodName);
+      }
+
+    axios.get(`http://127.0.0.1:5000/compare?methods=${methods}`)
+            .then(res => {
+              setPlot(res.data);
+              setPlotLoaded(true);
+              setPlotLoading(false);
+            })
   }
 
   const getShapPlot = (tool,data) => {
@@ -115,6 +137,14 @@ function App() {
     }
   }
 
+  const changeAnalysisMode = (mode) => {
+    if (mode != analysisMode){
+      setPlotLoaded(false);
+      setPlotLoading(false);
+    }
+    setAnalysisMode(mode);
+  }
+
   return (
     <div className="app">
 
@@ -132,10 +162,10 @@ function App() {
               <br></br>
               <Nav fill variant="tabs" defaultActiveKey="/">
                 <Nav.Item>
-                  <Nav.Link href="/" onClick={() => setAnalysisMode(0)}>Single model</Nav.Link>
+                  <Nav.Link href="/" onClick={() => changeAnalysisMode(0)}>Single model</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="link-1" onClick={() =>setAnalysisMode(1)}>Compare models</Nav.Link>
+                  <Nav.Link eventKey="link-1" onClick={() => changeAnalysisMode(1)}>Compare models</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Card.Header>
@@ -209,13 +239,15 @@ function App() {
                   : <div></div>
                 }
                 </Card.Text>
-                <Card.Link style={{ bottom:'0px' }} href="#">
-                  <Button variant="primary" onClick={() => getShapPlot(selectedTool, selectedData)} >Run Shap</Button>{' '}
-                </Card.Link>
+                <div className="ava-buttons">
+                  <Card.Link style={{ bottom:'0px' }} href="#">
+                    <Button variant="primary" onClick={() => getShapPlot(selectedTool, selectedData)} >Run Shap</Button>{' '}
+                  </Card.Link>
 
-                <Card.Link style={{ bottom:'0px' }} href="#">
-                  <Button variant="primary" onClick={() => getPosPlot(selectedTool, selectedData)} >Run Pos</Button>{' '}
-                </Card.Link>
+                  <Card.Link style={{ bottom:'0px' }} href="#">
+                    <Button variant="primary" onClick={() => getPosPlot(selectedTool, selectedData)} >Run Pos</Button>{' '}
+                  </Card.Link>
+                </div>
 
                 </div>
                 :
@@ -251,9 +283,11 @@ function App() {
                       )}
                     </Form>
 
-                    <Card.Link style={{ bottom:'0px' }} href="#">
-                      <Button variant="primary" onClick={() => console.log("TODO")} >Compare</Button>{' '}
-                    </Card.Link>
+                    <div className="ava-buttons">
+                      <Card.Link style={{ bottom:'0px' }} href="#">
+                        <Button variant="primary" onClick={() => startCompare()} >Compare</Button>{' '}
+                      </Card.Link>
+                    </div>
 
 
                 </div>

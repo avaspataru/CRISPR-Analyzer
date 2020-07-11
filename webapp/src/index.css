@@ -110,6 +110,10 @@ form{
   margin-top:10px;
 }
 
+.ava-buttons{
+  float:right;
+}
+
 .form-check label{
   width:100%;
 }

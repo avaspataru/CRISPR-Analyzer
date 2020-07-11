@@ -61,9 +61,8 @@ function App() {
 
   const checkedData = (pos) => {
     let cd = [...checkedDatasets];
-    console.log(cd);
     const index = cd.indexOf(pos);
-    console.log(index);
+
     if (index > -1) {
         cd.splice(index, 1);
     } else {
@@ -79,7 +78,7 @@ function App() {
     var methods = [];
     for(var t in selectedComparisonTools)
       for(var d in checkedDatasets ){
-        var methodName = tools[t].code + "-" + datasets[d].code;
+        var methodName = tools[selectedComparisonTools[t]].code + "-" + datasets[checkedDatasets[d]].code;
         methods.push(methodName);
       }
 

@@ -30,7 +30,7 @@ def getShorthand(tool):
         return 's2'
     elif tool in ['chop-chop-xu', 'chop-chop-doench', 'chop-chop-moreno']:
         sep = tool.split('-')
-        return 'chop-'+sep[2][0] #first letter of the scoring method
+        return 'ch-'+sep[2][0] #first letter of the scoring method
     else:
         return tool
 

@@ -62,7 +62,6 @@ def compareMethods(methods):
 
 
     plt.ylabel("SHAP values")
-    plt.xlabel("Tools ran on XU")
     plt.title("Guide positions")
     plt.legend((pA[0], pC[0], pG[0], pT[0]), ('A', 'C', 'G', 'T'))
 

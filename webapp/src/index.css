@@ -40,6 +40,12 @@ code {
   position:fixed;
 }
 
+.ava-remove{
+  float:right;
+  display:inline-block;
+  margin-right:5px;
+}
+
 .ava-download-button{
   float:right;
   margin-top:20px;

@@ -62,6 +62,13 @@ function App() {
       setSelectedComparisonTools(selectedComparisonTools.concat(pos));
   }
 
+  const removeSelectedTool = (pos) => {
+    setHasError(false);
+    var array = [...selectedComparisonTools];
+    array.splice(pos,1);
+    setSelectedComparisonTools(array);
+  }
+
   const checkedData = (pos) => {
     setHasError(false);
     let cd = [...checkedDatasets];
@@ -276,7 +283,12 @@ function App() {
 
                   <hr />
 
-                  {selectedComparisonTools.map( (tool,index) =><div> <p className="ava-bold">Model #{index}: </p><p className="ava-in">{tools[tool].name}</p></div>)}
+                  {selectedComparisonTools.map( (tool,index) =>
+                    <div>
+                      <p className="ava-bold">Model #{index}: </p>
+                      <p className="ava-in">{tools[tool].name}</p>
+                      <a onClick={() => removeSelectedTool(index)} ><p className="ava-remove">X</p></a>
+                    </div>)}
 
                     <p className="ava-label-in">Add </p><div className="ava-select-cont">
                       <select class="form-control form-control-sm" value={-1} onChange={(e) => addTool(e.target.value)}>

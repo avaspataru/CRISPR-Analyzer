@@ -17,26 +17,39 @@ code {
     monospace;
 }
 
+.ava-logo{
+  width: 30%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
 .ava-container-nav{
   background-color: #f8f9fa;
-  padding:1.2%;
-  height:10%;
+  height:15%;
   position:fixed;
   width:100%;
 }
 
 .ava-left-container{
   width:50%;
-  height:90%;
-  top:10%;
+  height:88%;
+  top:15%;
   padding:2%;
   position:fixed;
 }
 
+.ava-download-button{
+  float:right;
+  margin-top:20px;
+    margin-right: 0px;
+}
+
 .ava-right-container{
   width:50%;
-  height:90%;
-  top:10%;
+  height:88%;
+  top:15%;
   padding:2%;
   position:fixed;
   left:50%;

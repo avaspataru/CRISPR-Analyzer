@@ -1,5 +1,5 @@
 ![Logo](https://github.com/avaspataru/CRISPR-Analyzer/blob/master/screens/logo.png)
-# CRISPR-Analyzer
+
 A web application which helps us investigate the importance of features in ML-based tools for CRISPR/Cas9 gRNA efficiency prediction. This was developed as part of an MSc project in 2020.  
 
 ## What it does

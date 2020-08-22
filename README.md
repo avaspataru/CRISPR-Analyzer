@@ -1,5 +1,6 @@
+![Logo](https://github.com/avaspataru/CRISPR-Analyzer/blob/master/screens/logo.png)
 # CRISPR-Analyzer
-A web application which helps us investigate the importance of features in ML-based tools for CRISPR/Cas9 gRNA efficiency prediction. 
+A web application which helps us investigate the importance of features in ML-based tools for CRISPR/Cas9 gRNA efficiency prediction. This was developed as part of an MSc project in 2020.  
 
 ## What it does
 The application has a number of models and datasets previously loaded. For each model and dataset pair (upon user selection), it can calculate the SHAP values of each feature. The SHAP values are a great way of measuring feature importance across models (see [link](https://towardsdatascience.com/explain-your-model-with-the-shap-values-bc36aac4de3d)).
@@ -20,6 +21,16 @@ The application combines a python backend with a react frontend, which communica
 
 To ensure that the application runs in a timely manner, once the SHAP values have been calculated for a model-dataset pair, they are saved in a pickle file. Whenever the analysis is ran again, the SHAP values will be taken from the pickle file instead of recalculation. 
 
+![Sequence_diagram](https://github.com/avaspataru/CRISPR-Analyzer/blob/master/screens/use_case.jpg)
+
+## Work in progress
+* allowing the user to upload their own model 
+* allowing the user to publish their model and have it available for everyone (after review)
+* allowing the user to use customized datasets 
+* adding an instructions page 
+* adding radial plots for comparison of positional-specific nucleotide preference
+* fix namings on plots (especially positional compare)
+
 ## Screens 
 The design combines simple bootstrap components for a minimalist design, making it very simple and intuitive for the user to know what to access. The application also accounts for any possible user misjudgements (e.g. running the analysis on no datasets).
 
@@ -32,9 +43,4 @@ The design combines simple bootstrap components for a minimalist design, making 
 ### Compare models screen
 ![Image of compare screen](https://github.com/avaspataru/CRISPR-Analyzer/blob/master/screens/Compare_screen.JPG)
 
-## Work in progress
-* allowing the user to upload their own model 
-* allowing the user to publish their model and have it available for everyone (after review)
-* allowing the user to use customized datasets 
-* adding an instructions page 
-* adding radial plots for comparison of positional-specific nucleotide preference
+

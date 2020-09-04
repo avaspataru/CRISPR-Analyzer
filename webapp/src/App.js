@@ -175,12 +175,12 @@ function App() {
   return (
     <div className="app">
 
-      <div className="ava-container-nav">
-            <img src={logo} className="ava-logo" />
+      <div className="my-container-nav">
+            <img src={logo} className="my-logo" />
       </div>
 
-      <div className="ava-left-container">
-        <div className="ava-card-container">
+      <div className="my-left-container">
+        <div className="my-card-container">
           <Card style={{ height:'100%' }}>
 
             <Card.Header>
@@ -203,8 +203,8 @@ function App() {
                 ?<div>
                 <Card.Text>
                 <div class="form-group row">
-                  <label><p className="ava-bold"> Model: </p> </label>
-                  <div className="ava-select-cont">
+                  <label><p className="my-bold"> Model: </p> </label>
+                  <div className="my-select-cont">
                     <select class="form-control form-control-sm"  onChange={(e) => changeTool(e.target.value)}>
                       <option value={-1}>Please select a model...</option>
                       {
@@ -214,18 +214,18 @@ function App() {
                   </div>
                 </div>
 
-                <p className="ava-description">
+                <p className="my-description">
 
-                {(hasSelectedTool) ? <div><p className="ava-descript-header">Description:</p> {selectedTool.description} </div> : <div></div>}
-                {(hasSelectedTool) ? <div><p className="ava-descript-header">Source:</p> <a href={selectedTool.link}>{selectedTool.link}</a> </div> : <div></div>}
-                <div className="ava-info"><p>The model you select will be used to calculate SHAP values of the features it considers. These may differ from model to model.</p></div>
+                {(hasSelectedTool) ? <div><p className="my-descript-header">Description:</p> {selectedTool.description} </div> : <div></div>}
+                {(hasSelectedTool) ? <div><p className="my-descript-header">Source:</p> <a href={selectedTool.link}>{selectedTool.link}</a> </div> : <div></div>}
+                <div className="my-info"><p>The model you select will be used to calculate SHAP values of the features it considers. These may differ from model to model.</p></div>
                 </p>
 
                 <hr></hr>
 
                 <div class="form-group row">
-                  <label><p className="ava-bold"> Dataset: </p> </label>
-                  <div className="ava-select-cont">
+                  <label><p className="my-bold"> Dataset: </p> </label>
+                  <div className="my-select-cont">
                     <select class="form-control form-control-sm"  onChange={(e) => changeData(e.target.value)}>
                     <option value={-1}>Please select a dataset...</option>
                     {
@@ -235,13 +235,13 @@ function App() {
                   </div>
                 </div>
 
-                <p className="ava-description">
+                <p className="my-description">
                 {(hasSelectedData)
                    ?
                    <a href={selectedData.link} download>
                    <div>
                        <p>
-                       <div className="ava-download">
+                       <div className="my-download">
                          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                            <path fill-rule="evenodd" d="M.5 8a.5.5 0 0 1 .5.5V12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5a.5.5 0 0 1 1 0V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8.5A.5.5 0 0 1 .5 8z"/>
                            <path fill-rule="evenodd" d="M5 7.5a.5.5 0 0 1 .707 0L8 9.793 10.293 7.5a.5.5 0 1 1 .707.707l-2.646 2.647a.5.5 0 0 1-.708 0L5 8.207A.5.5 0 0 1 5 7.5z"/>
@@ -266,7 +266,7 @@ function App() {
                   : <div></div>
                 }
                 </Card.Text>
-                <div className="ava-buttons">
+                <div className="my-buttons">
                   <Card.Link style={{ bottom:'0px' }} href="#">
                     <Button variant="primary" onClick={() => getShapPlot(selectedTool, selectedData)} >Run Shap</Button>{' '}
                   </Card.Link>
@@ -285,12 +285,12 @@ function App() {
 
                   {selectedComparisonTools.map( (tool,index) =>
                     <div>
-                      <p className="ava-bold">Model #{index}: </p>
-                      <p className="ava-in">{tools[tool].name}</p>
-                      <a onClick={() => removeSelectedTool(index)} ><p className="ava-remove">X</p></a>
+                      <p className="my-bold">Model #{index}: </p>
+                      <p className="my-in">{tools[tool].name}</p>
+                      <a onClick={() => removeSelectedTool(index)} ><p className="my-remove">X</p></a>
                     </div>)}
 
-                    <p className="ava-label-in">Add </p><div className="ava-select-cont">
+                    <p className="my-label-in">Add </p><div className="my-select-cont">
                       <select class="form-control form-control-sm" value={-1} onChange={(e) => addTool(e.target.value)}>
                         <option value={-1}>Select a model...</option>
                         {
@@ -300,7 +300,7 @@ function App() {
                     </div>
 
                     <hr />
-                    <p className="ava-bold">Datasets:</p>
+                    <p className="my-bold">Datasets:</p>
                     <br />
                     <Form>
                       {datasets.map( (data,index) =>
@@ -324,7 +324,7 @@ function App() {
                       : <div></div>
                     }
 
-                    <div className="ava-buttons">
+                    <div className="my-buttons">
                       <Card.Link style={{ bottom:'0px' }} href="#">
                         <Button variant="primary" onClick={() => startCompare()} >Compare</Button>{' '}
                       </Card.Link>
@@ -340,10 +340,10 @@ function App() {
         </div>
       </div>
 
-      <div className="ava-right-container">
+      <div className="my-right-container">
       <Card className="text-center" style={{ height:'100%' }}>
       {(plotLoading)
-        ? <div className="ava-center">
+        ? <div className="my-center">
             <Spinner animation="border" variant="primary" >
               <span className="sr-only">Loading...</span>
             </Spinner>
@@ -354,8 +354,8 @@ function App() {
       {(!plotLoading && !plotLoaded)
         ?
           <Card.Body>
-            <div className="ava-text-container">
-              <div className="ava-block">
+            <div className="my-text-container">
+              <div className="my-block">
                 <svg width="2em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
                 </svg>
@@ -372,10 +372,10 @@ function App() {
       }
 
       {(plotLoaded && !plotLoading)
-        ? <div className="ava-center">
+        ? <div className="my-center">
 
               <a href={"data:image/png;base64,"+plot} download>
-                <div className="ava-download-button">
+                <div className="my-download-button">
                   <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M.5 8a.5.5 0 0 1 .5.5V12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5a.5.5 0 0 1 1 0V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8.5A.5.5 0 0 1 .5 8z"/>
                   <path fill-rule="evenodd" d="M5 7.5a.5.5 0 0 1 .707 0L8 9.793 10.293 7.5a.5.5 0 1 1 .707.707l-2.646 2.647a.5.5 0 0 1-.708 0L5 8.207A.5.5 0 0 1 5 7.5z"/>

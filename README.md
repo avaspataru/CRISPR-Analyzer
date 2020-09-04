@@ -23,6 +23,24 @@ To ensure that the application runs in a timely manner, once the SHAP values hav
 
 ![Sequence_diagram](https://github.com/avaspataru/CRISPR-Analyzer/blob/master/screens/use_case.jpg)
 
+## Installation instructions 
+The application is made up of a backend (backend folder) and a frontend (frontend folder). It requires Python3 for the backend and React with npm for the frontend. 
+
+
+To run the python backend (after installing packages): 
+```
+cd ./backend/src/
+python api.py
+```
+
+To run the react frontend (after installing packages):
+```
+cd ./webapp
+npm start
+```
+
+For the communication between the two to work, the backend should run on port 5000 and the frontend on 3000. 
+
 ## Work in progress
 * allowing the user to upload their own model 
 * allowing the user to publish their model and have it available for everyone (after review)
